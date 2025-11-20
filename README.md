@@ -4,7 +4,7 @@
 This project simulates an industrial climate control unit using a **Finite State Machine (FSM)** architecture. It bridges the gap between low-level embedded logic and high-level visual simulation.
 
 ### 🎥 Simulation Demo
-
+https://www.linkedin.com/feed/update/urn:li:activity:7397421919106469888/
 
 ### 🛠️ Technologies Used
 * **Core Logic:** C Language (Structs, Pointers)
