@@ -17,29 +17,26 @@ typedef struct{
 	Types currentType;
 } Current;
 
-/* *now ifadesi bu fonksiyondaki deðiþkenlerin kopyasal deðiþimi deðil gerçek deðer deðiþimini gösterir.
-Kullanýmý now->deðiþken þeklinde ve main fonksiyonunda çaðýrýrken &now olaraktýr. */
-
-//KARAR VERME MEKANÝZMAMIZ
+//KARAR VERME MEKANÄ°ZMAMIZ
 void Decision(Current *now){	
 
 	int random_cycles;
 	float random_temp;
 	
 	
-	//Rastgele Sýcaklýk Deðeri Atamasý Normalde Sensöre Baðlý Verilerden Sýcaklýk Çekeceðiz
-	now->currentTemp =((float)rand() / (float)RAND_MAX)*60; //rand()/RAND_MAX 0.0 ile 1.0 arasýnda deðer verir     
+	//Rastgele SÄ±caklÄ±k DeÄŸeri AtamasÄ± Normalde SensÃ¶re BaÄŸlÄ± Verilerden SÄ±caklÄ±k Ã‡ekeceÄŸiz
+	now->currentTemp =((float)rand() / (float)RAND_MAX)*60; //rand()/RAND_MAX 0.0 ile 1.0 arasÄ±nda deÄŸer verir     
 	printf("Su Anki Sicaklik Degeri: %.2f\n",now->currentTemp);
 	
 	//ALARM DURUMU
-	if(now->currentTemp>50||now->currentTemp<0){ //Acil durumda direk kapanmasý için önce ALARM tanýmlandý
+	if(now->currentTemp>50||now->currentTemp<0){ //Acil durumda direk kapanmasÄ± iÃ§in Ã¶nce ALARM tanÄ±mlandÄ±
 		now->currentType=ALARM;
 		printf("SU ANDA ALARM DURUMUNDA! SISTEM KENDINI KAPATIYOR\n");
 		Sleep(500);
 		exit(1);
 	}
 	
-	//DÜÞÜK SICAKLIK DURUMU
+	//DÃœÅžÃœK SICAKLIK DURUMU
 	else if(now->currentTemp<15){
 		now->currentType=HEATING;
 		printf("SU ANDA ISINMA MODUNA GECILIYOR!\n");
@@ -48,24 +45,24 @@ void Decision(Current *now){
 		//-----------------ISITMA MODU-----------------//
 		
 		random_cycles = rand()%6+1;
-		printf("DENENECEK ISINMA SAYISI: %d\n",random_cycles);//1-6 ARASI RASTGELE ISITMA ÝÞLEMÝ SAYISI (BÝLEREK RASTGELE ATANDI! FANLARDA SORUN DURUMU VEYA FAZLA ENERJÝ HARCAMAMASI ÝÇÝN MEVCUT ENERJÝNÝN ÝSTENEN DERECEDE KULLANILMASI DURUMU GÖZ ÖNÜNE ALINDI!)
+		printf("DENENECEK ISINMA SAYISI: %d\n",random_cycles);//1-6 ARASI RASTGELE ISITMA Ä°ÅžLEMÄ° SAYISI (BÄ°LEREK RASTGELE ATANDI! FANLARDA SORUN DURUMU VEYA FAZLA ENERJÄ° HARCAMAMASI Ä°Ã‡Ä°N MEVCUT ENERJÄ°NÄ°N Ä°STENEN DERECEDE KULLANILMASI DURUMU GÃ–Z Ã–NÃœNE ALINDI!)
 		
 		Sleep(500);
 		
 		for(int i=0; i<random_cycles;i++){
-			random_temp=((float)rand()/(float)RAND_MAX)*5;//SICAKLIÐI RASTGELE ARTTIRMA... ÝSTENEN ÇALIÞMA HIZINA GÖRE AYARLANABÝLÝR.
+			random_temp=((float)rand()/(float)RAND_MAX)*5;//SICAKLIÄžI RASTGELE ARTTIRMA... Ä°STENEN Ã‡ALIÅžMA HIZINA GÃ–RE AYARLANABÄ°LÄ°R.
 			now->currentTemp+=random_temp;
 			printf("DENEME:%d ISINMA DEVAM EDIYOR! MEVCUT SICAKLIK DEGERI: %.2f\n",i+1,now->currentTemp);
 			Sleep(500);
 			
-			if(now->currentTemp<35&&now->currentTemp>15){ //NORMAL DURUMA GELDÝYSE
+			if(now->currentTemp<35&&now->currentTemp>15){ //NORMAL DURUMA GELDÄ°YSE
 				now->currentType=IDLE;
 				printf("%d.DENEMEDE NORMAL MODA DONDU. DENEMLER DURUYOR!\n",i+1);
 				Sleep(500);
 				printf("\nNORMAL MODA DONDU SORUNSUZ CALISMAYA DEVAM EDIYOR!\n");
 				return;
 			}	
-			if(now->currentTemp<0||now->currentTemp>50){ //YANLIÞLIKLA FAZLA ISINIRSA VEYA SOÐURSA DURUMU KONTROLÜ (SÝSTEM HATALARI VS. YÜZÜNDEN)
+			if(now->currentTemp<0||now->currentTemp>50){ //YANLIÅžLIKLA FAZLA ISINIRSA VEYA SOÄžURSA DURUMU KONTROLÃœ (SÄ°STEM HATALARI VS. YÃœZÃœNDEN)
 				now->currentType=ALARM;
 				printf("ALARM MODUNA GECILDI!\n");
 				Sleep(500);
@@ -73,7 +70,7 @@ void Decision(Current *now){
 			}
 		}
 		
-		if(now->currentTemp<15){ //ISITMA YETMEDÝYSE
+		if(now->currentTemp<15){ //ISITMA YETMEDÄ°YSE
 			now->currentType=ALARM;
 			printf("ISINMA YETERSIZ GELDI! SISTEM KENDINI KAPATIYOR!");
 			Sleep(500);
@@ -84,7 +81,7 @@ void Decision(Current *now){
 		
 	}
 	
-	//YÜKSEK SICAKLIK DURUMU
+	//YÃœKSEK SICAKLIK DURUMU
 	else if(now->currentTemp>35){
 		now->currentType=COOLING;
 		printf("SU ANDA SOGUTMA MODUNA GECILIYOR!\n");
@@ -93,12 +90,12 @@ void Decision(Current *now){
 		//-----------------SOGUTMA MODU-----------------//
 		
 		random_cycles = rand()%6+1;
-		printf("DENENECEK SOGUTMA SAYISI: %d\n",random_cycles);//1-6 ARASI RASTGELE SOÐUTMA ÝÞLEMÝ SAYISI (BÝLEREK RASTGELE ATANDI! FANLARDA SORUN DURUMU VEYA FAZLA ENERJÝ HARCAMAMASI ÝÇÝN MEVCUT ENERJÝNÝN ÝSTENEN DERECEDE KULLANILMASI DURUMU GÖZ ÖNÜNE ALINDI!
+		printf("DENENECEK SOGUTMA SAYISI: %d\n",random_cycles);//1-6 ARASI RASTGELE SOÄžUTMA Ä°ÅžLEMÄ° SAYISI (BÄ°LEREK RASTGELE ATANDI! FANLARDA SORUN DURUMU VEYA FAZLA ENERJÄ° HARCAMAMASI Ä°Ã‡Ä°N MEVCUT ENERJÄ°NÄ°N Ä°STENEN DERECEDE KULLANILMASI DURUMU GÃ–Z Ã–NÃœNE ALINDI!
 		Sleep(500);
 
 		
 		for(int i=0; i<random_cycles;i++){
-			random_temp=((float)rand()/(float)RAND_MAX)*5;//SICAKLIÐI RASTGELE AZALTMA... ÝSTENEN ÇALIÞMA HIZINA GÖRE AYARLANABÝLÝR.
+			random_temp=((float)rand()/(float)RAND_MAX)*5;//SICAKLIÄžI RASTGELE AZALTMA... Ä°STENEN Ã‡ALIÅžMA HIZINA GÃ–RE AYARLANABÄ°LÄ°R.
 			now->currentTemp-=random_temp;
 			printf("DENEME:%d SOGUTMA DEVAM EDIYOR! MEVCUT SICAKLIK DEGERI: %.2f\n",i+1,now->currentTemp);
 			Sleep(500);
@@ -110,7 +107,7 @@ void Decision(Current *now){
 				printf("\nNORMAL MODA DONDU SORUNSUZ CALISMAYA DEVAM EDIYOR!\n");
 				return;
 			}	
-			if(now->currentTemp>50||now->currentTemp<0){ //YANLIÞLIKLA FAZLA ISINIRSA VEYA SOÐURSA DURUMU KONTROLÜ (SÝSTEM HATALARI VS. YÜZÜNDEN)
+			if(now->currentTemp>50||now->currentTemp<0){ //YANLIÅžLIKLA FAZLA ISINIRSA VEYA SOÄžURSA DURUMU KONTROLÃœ (SÄ°STEM HATALARI VS. YÃœZÃœNDEN)
 				now->currentType=ALARM;
 				printf("ALARM MODUNA GECILDI!\n");
 				Sleep(500);
@@ -118,7 +115,7 @@ void Decision(Current *now){
 			}
 		}
 		
-		if(now->currentTemp>35){ //SOÐUTMA YETMEDÝYSE
+		if(now->currentTemp>35){ //SOÄžUTMA YETMEDÄ°YSE
 			now->currentType=ALARM;
 			printf("SOGUTMA YETERSIZ GELDI! SISTEM KENDINI KAPATIYOR!");
 			Sleep(500);
@@ -134,11 +131,12 @@ void Decision(Current *now){
 }
 
 int main(void) {	
-	srand(GetTickCount()); //En güvenilir rastgele atama her milisaniyede çalýþtýrsam bile yine farklý deðerler verecektir
+	srand(GetTickCount());
 
 	Current now;
 	
-	Decision(&now); // & Sebebi Decision fonksiyonundaki deðerlerin pseudo olarak deðil gerçekten deðiþmesini saðlamaktýr
+	Decision(&now);
 	now.currentType = IDLE;
 	return 0;
 }
+
